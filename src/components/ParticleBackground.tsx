@@ -2,17 +2,17 @@
 import React, { useEffect, useRef } from 'react';
 
 class Particle {
-    x: number;
-    y: number;
-    size: number;
-    speedX: number;
-    speedY: number;
-    opacity: number;
+    x!: number;
+    y!: number;
+    size!: number;
+    speedX!: number;
+    speedY!: number;
+    opacity!: number;
     canvas: HTMLCanvasElement;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
-        this.reset();
+        this.reset(); // Initialize properties in the reset method
     }
 
     reset() {
@@ -44,6 +44,7 @@ class Particle {
         ctx.fill();
     }
 }
+
 
 const ParticleBackground: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);

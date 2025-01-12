@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card } from 'antd';
 import { PlayCircleOutlined, PauseCircleOutlined } from '@ant-design/icons';
 
@@ -38,11 +38,11 @@ const tracks: Track[] = [
     },
     {
         id: '4',
-        title: 'Urban Night',
-        artist: 'City Lights',
-        duration: '3:15',
+        title: 'Rainy Mood',
+        artist: 'Ambient Sounds',
+        duration: '3:10',
         coverUrl: 'https://blog.spoongraphics.co.uk/wp-content/uploads/2017/01/thumbnail-2.jpg',
-        audioUrl: 'your-audio-url-3'
+        audioUrl: 'your-audio-url-4'
     }
 ];
 
@@ -76,44 +76,29 @@ const MusicPlayer = () => {
     }, [isPlaying]);
 
     const startSpectrum = () => {
-        if (!canvasRef.current) return;
-
         const canvas = canvasRef.current;
+        if (!canvas) return;
 
-        let ctx;
-
-        if ("getContext" in canvas) {
-            ctx = canvas.getContext('2d');
-        }
+        const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
         const animate = () => {
             ctx.fillStyle = 'rgba(22, 27, 34, 0.2)';
-            if ("width" in canvas) {
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-            }
+            ctx.fillRect(0, 0, canvas.width ?? 0, canvas.height ?? 0); // Handle possible null values
 
-            // Generate some dummy spectrum bars
+            // Generate dummy spectrum bars
             const bars = 20;
-            let  barWidth;
-            if ("width" in canvas) {
-                barWidth = canvas.width / bars;
-            }
+            const barWidth = (canvas.width ?? 0) / bars;
 
             for (let i = 0; i < bars; i++) {
-                let height;
-                if ("height" in canvas) {
-                    height = Math.random() * canvas.height * 0.8;
-                }
+                const height = Math.random() * (canvas.height ?? 0) * 0.8;
                 ctx.fillStyle = 'rgba(147, 51, 234, 0.8)';
-                if ("height" in canvas) {
-                    ctx.fillRect(
-                        i * barWidth,
-                        canvas.height - height,
-                        barWidth - 2,
-                        height
-                    );
-                }
+                ctx.fillRect(
+                    i * barWidth,
+                    (canvas.height ?? 0) - height,
+                    barWidth - 2,
+                    height
+                );
             }
 
             animationFrameRef.current = requestAnimationFrame(animate);

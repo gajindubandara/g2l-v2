@@ -9,7 +9,7 @@ export const Navbar: React.FC = () => {
     const toggleButtonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
-        let lastScroll = 0;
+        // let lastScroll = 0;
 
         const updateNavbar = () => {
             const currentScroll = window.pageYOffset;
@@ -28,7 +28,7 @@ export const Navbar: React.FC = () => {
                 setIsScrolled(false);
             }
 
-            lastScroll = currentScroll;
+            // lastScroll = currentScroll;
         };
 
         updateNavbar();
