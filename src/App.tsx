@@ -36,8 +36,8 @@ const App: React.FC = () => {
             <Hero />
             <Services />
             <Projects />
-            <Contact />
             <MusicPlayer/>
+            <Contact />
             <Footer />
         </>
     );

@@ -5,46 +5,122 @@ class Particle {
     x!: number;
     y!: number;
     size!: number;
-    speedX!: number;
-    speedY!: number;
-    opacity!: number;
+    alpha!: number;
+    speed!: number;
+    direction!: number;
+    vx!: number;
+    vy!: number;
+    distanceToTurn!: number;
+    distanceTraveled!: number;
     canvas: HTMLCanvasElement;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
-        this.reset(); // Initialize properties in the reset method
+        this.reset();
     }
 
     reset() {
-        this.x = Math.random() * this.canvas.width;
-        this.y = Math.random() * this.canvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = Math.random() * 2 - 1;
-        this.speedY = Math.random() * 2 - 1;
-        this.opacity = Math.random() * 0.5 + 0.2;
+        // Start from a random edge
+        if (Math.random() < 0.5) {
+            this.x = Math.random() < 0.5 ? 0 : this.canvas.width;
+            this.y = Math.random() * this.canvas.height;
+        } else {
+            this.x = Math.random() * this.canvas.width;
+            this.y = Math.random() < 0.5 ? 0 : this.canvas.height;
+        }
+
+        this.size = Math.random() * 2 + 1;
+        this.alpha = 1;
+        this.speed = Math.random() * 2 + 2;
+
+        // Initialize direction (0: right, 1: down, 2: left, 3: up)
+        this.direction = Math.floor(Math.random() * 4);
+        this.setVelocity();
+
+        // Distance until next turn
+        this.distanceToTurn = Math.random() * 100 + 50;
+        this.distanceTraveled = 0;
+    }
+
+    setVelocity() {
+        switch (this.direction) {
+            case 0: // right
+                this.vx = this.speed;
+                this.vy = 0;
+                break;
+            case 1: // down
+                this.vx = 0;
+                this.vy = this.speed;
+                break;
+            case 2: // left
+                this.vx = -this.speed;
+                this.vy = 0;
+                break;
+            case 3: // up
+                this.vx = 0;
+                this.vy = -this.speed;
+                break;
+        }
+    }
+
+    turn() {
+        // Turn left or right (90 degrees)
+        this.direction = (this.direction + (Math.random() < 0.5 ? 1 : 3)) % 4;
+        this.setVelocity();
+        this.distanceToTurn = Math.random() * 100 + 50;
+        this.distanceTraveled = 0;
     }
 
     update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+        this.x += this.vx;
+        this.y += this.vy;
+
+        // Calculate distance traveled
+        this.distanceTraveled += this.speed;
+
+        // Check if it's time to turn
+        if (this.distanceTraveled >= this.distanceToTurn) {
+            this.turn();
+        }
+
+        // Start fading out near edges
+        const edgeDistance = 50;
         if (
-            this.x < 0 ||
-            this.x > this.canvas.width ||
-            this.y < 0 ||
-            this.y > this.canvas.height
+            this.x < edgeDistance ||
+            this.x > this.canvas.width - edgeDistance ||
+            this.y < edgeDistance ||
+            this.y > this.canvas.height - edgeDistance
+        ) {
+            this.alpha -= 0.02;
+        }
+
+        // Reset if particle is out of bounds or fully faded
+        if (
+            this.alpha <= 0 ||
+            this.x < -20 ||
+            this.x > this.canvas.width + 20 ||
+            this.y < -20 ||
+            this.y > this.canvas.height + 20
         ) {
             this.reset();
         }
     }
 
     draw(ctx: CanvasRenderingContext2D) {
+        // Draw particle
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(95,101,236, ${this.opacity})`;
+        ctx.fillStyle = `rgba(138, 43, 226, ${this.alpha})`;
         ctx.fill();
+
+        // Draw trail
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x - this.vx * 8, this.y - this.vy * 8);
+        ctx.strokeStyle = `rgba(138, 43, 226, ${this.alpha * 0.5})`;
+        ctx.stroke();
     }
 }
-
 
 const ParticleBackground: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -59,35 +135,40 @@ const ParticleBackground: React.FC = () => {
         if (!ctx) return;
 
         const resizeCanvas = () => {
-            if (canvas) {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         };
 
         // Initial setup
         resizeCanvas();
-        particlesRef.current = Array(100)
-            .fill(null)
-            .map(() => new Particle(canvas));
+        particlesRef.current = Array.from({ length: 50 }, () => new Particle(canvas));
 
         // Animation function
-        const animate = () => {
-            if (!ctx || !canvas) return;
+        let lastTime = 0;
+        const fps = 60;
+        const frameInterval = 1000 / fps;
 
-            ctx.fillStyle = '#121212';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const animate = (currentTime: number) => {
+            if (!lastTime) lastTime = currentTime;
+            const deltaTime = currentTime - lastTime;
 
-            particlesRef.current.forEach(particle => {
-                particle.update();
-                particle.draw(ctx);
-            });
+            if (deltaTime > frameInterval) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                particlesRef.current.forEach((particle) => {
+                    particle.update();
+                    particle.draw(ctx);
+                });
+
+                lastTime = currentTime - (deltaTime % frameInterval);
+            }
 
             animationFrameRef.current = requestAnimationFrame(animate);
         };
 
         // Start animation
-        animate();
+        animate(0);
 
         // Add resize listener
         window.addEventListener('resize', resizeCanvas);
@@ -95,25 +176,24 @@ const ParticleBackground: React.FC = () => {
         // Cleanup
         return () => {
             if (animationFrameRef.current) {
-                if (typeof animationFrameRef.current === "number") {
-                    cancelAnimationFrame(animationFrameRef.current);
-                }
+                cancelAnimationFrame(animationFrameRef.current);
             }
             window.removeEventListener('resize', resizeCanvas);
         };
     }, []);
 
-    return <canvas ref={canvasRef} style={styles.canvas} />;
-};
-
-const styles = {
-    canvas: {
-        position: 'fixed' as const,
-        top: '0px',
-        left: '0px',
-        zIndex: -1,
-        background: '#8a0d2a',
-    } as React.CSSProperties, // Explicitly cast to CSSProperties
+    return (
+        <canvas
+            ref={canvasRef}
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                zIndex: -1,
+                background: 'black',
+            }}
+        />
+    );
 };
 
 export default ParticleBackground;
