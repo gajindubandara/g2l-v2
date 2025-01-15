@@ -176,7 +176,9 @@ export const ParticleBackground: React.FC = () => {
         // Cleanup
         return () => {
             if (animationFrameRef.current) {
-                cancelAnimationFrame(animationFrameRef.current);
+                if (typeof animationFrameRef.current === "number") {
+                    cancelAnimationFrame(animationFrameRef.current);
+                }
             }
             window.removeEventListener('resize', resizeCanvas);
         };

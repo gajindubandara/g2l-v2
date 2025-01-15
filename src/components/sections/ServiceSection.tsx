@@ -1,5 +1,5 @@
 import React from 'react';
-import {services} from "../data.ts";
+import {services} from "../../data/data.ts";
 
 interface ServiceCardProps {
     icon: string;
@@ -24,7 +24,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, del
     );
 };
 
-export const Services: React.FC = () => {
+export const ServiceSection: React.FC = () => {
 
 
 

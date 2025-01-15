@@ -1,5 +1,5 @@
 import React from 'react';
-import {webProjects} from "../data.ts";
+import {webProjects} from "../../data/data.ts";
 
 interface ProjectCardProps {
     image: string;

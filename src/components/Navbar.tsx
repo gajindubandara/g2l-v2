@@ -1,16 +1,13 @@
-// src/components/Navbar.tsx
 import React, { useEffect, useState, useRef } from 'react';
 
 export const Navbar: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isTransparent, setIsTransparent] = useState(true);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const menuRef = useRef<HTMLDivElement>(null);
-    const toggleButtonRef = useRef<HTMLButtonElement>(null);
+    const menuRef = useRef<HTMLDivElement | null>(null);
+    const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
 
     useEffect(() => {
-        // let lastScroll = 0;
-
         const updateNavbar = () => {
             const currentScroll = window.pageYOffset;
             const isDesktop = window.innerWidth >= 992;
@@ -27,8 +24,6 @@ export const Navbar: React.FC = () => {
                 setIsTransparent(false);
                 setIsScrolled(false);
             }
-
-            // lastScroll = currentScroll;
         };
 
         updateNavbar();
@@ -41,14 +36,14 @@ export const Navbar: React.FC = () => {
         };
     }, []);
 
-    // Handle clicks outside the menu
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 isMenuOpen &&
-                menuRef.current &&
-                !menuRef.current.contains(event.target as Node) &&
-                !toggleButtonRef.current?.contains(event.target as Node)
+                menuRef.current && // Ensure menuRef is not null
+                !menuRef.current.contains(event.target as Node) && // safely call contains
+                toggleButtonRef.current && // Ensure toggleButtonRef is not null
+                !toggleButtonRef.current!.contains(event.target as Node) // Non-null assertion for toggleButtonRef
             ) {
                 setIsMenuOpen(false);
             }

@@ -1,31 +1,16 @@
-// import './App.css'
-//
-// function App() {
-//
-//   return (
-//     <>
-//
-//     </>
-//   )
-// }
-//
-// export default App
-// src/App.tsx
 import React, { useEffect } from 'react';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { Services } from './components/Services';
-import { WebProjectSection } from './components/WebProjectSection.tsx';
-import { Contact } from './components/Contact';
+import { HeroSection } from './components/sections/HeroSection.tsx';
+import { ServiceSection } from './components/sections/ServiceSection.tsx';
+import { WebProjectSection } from './components/sections/WebProjectSection.tsx';
+import {BrandingProjectSection} from "./components/sections/BrandingProjectSection.tsx";
+import {ParticleBackground} from "./components/animations/ParticleBackground.tsx";
+import {MusicProjectSection} from "./components/sections/MusicProjectSection.tsx";
+import { ContactSection } from './components/sections/ContactSection.tsx';
 import { Footer } from './components/Footer';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './index.css';
-// import ParticleBackground from "./components/ParticleBackground.tsx";
-// import MusicProjectSection from "./components/MusicProjectSection.tsx";
-import {BrandingProjectSection} from "./components/BrandingProjectSection.tsx";
-import {ParticleBackground} from "./components/ParticleBackground.tsx";
-import {MusicProjectSection} from "./components/MusicProjectSection.tsx";
 
 const App: React.FC = () => {
     useEffect(() => {
@@ -36,13 +21,12 @@ const App: React.FC = () => {
         <>
             <ParticleBackground/>
             <Navbar />
-            <Hero />
-            <Services />
+            <HeroSection />
+            <ServiceSection />
             <WebProjectSection />
-            {/*<ProjectSection/>*/}
             <MusicProjectSection/>
             <BrandingProjectSection/>
-            <Contact />
+            <ContactSection />
             <Footer />
         </>
     );
