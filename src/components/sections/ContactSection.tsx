@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import Swal from 'sweetalert2';
 
-export const Contact: React.FC = () => {
+export const ContactSection: React.FC = () => {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',

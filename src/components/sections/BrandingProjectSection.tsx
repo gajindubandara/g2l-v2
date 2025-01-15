@@ -1,4 +1,5 @@
 import React from 'react';
+import {brandingProjects} from "../../data/data.ts";
 interface BrandingProjectProps {
     logo: string;
     brandName: string;
@@ -43,30 +44,6 @@ const BrandingCard: React.FC<BrandingProjectProps> = ({
 };
 
 export const BrandingProjectSection: React.FC = () => {
-    const brandingProjects = [
-        {
-            logo: 'https://i.vimeocdn.com/video/1740246597-34ae317d74de8f1305f45420b5644a746e26a6dc10cb96abfbf2875d4f3c8546-d?f=webp',
-            brandName: "EcoVibe",
-            industry: "Sustainable Fashion",
-            description: "Modern, eco-conscious brand identity that reflects environmental responsibility and style.",
-            colors: ['#2E7D32', '#81C784', '#C8E6C9', '#212121']
-        },
-        {
-            logo: 'https://i.vimeocdn.com/video/1740246597-34ae317d74de8f1305f45420b5644a746e26a6dc10cb96abfbf2875d4f3c8546-d?f=webp',
-            brandName: "TechFlow",
-            industry: "Software Solutions",
-            description: "Dynamic tech branding that communicates innovation and reliability.",
-            colors: ['#1976D2', '#64B5F6', '#BBDEFB', '#424242']
-        },
-        {
-            logo: 'https://i.vimeocdn.com/video/1740246597-34ae317d74de8f1305f45420b5644a746e26a6dc10cb96abfbf2875d4f3c8546-d?f=webp',
-            brandName: "Artisan Cafe",
-            industry: "Food & Beverage",
-            description: "Sophisticated cafe branding that brings artisanal quality to life.",
-            colors: ['#5D4037', '#8D6E63', '#D7CCC8', '#EFEBE9']
-        }
-    ];
-
     return (
         <section className="branding-section py-5" id="branding">
             <div className="container">
