@@ -1,4 +1,5 @@
 import React from 'react';
+import {services} from "../data.ts";
 
 interface ServiceCardProps {
     icon: string;
@@ -10,7 +11,7 @@ interface ServiceCardProps {
 const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, delay = 0 }) => {
     return (
         <div className="col-md-4 mb-4" data-aos="fade-up" data-aos-delay={delay}>
-            <div className="card service-card h-100 shadow-sm">
+            <div className="card project-card h-100 shadow-sm">
                 <div className="card-body text-center p-4">
                     <div className="service-icon">
                         <i className={`bi ${icon} fs-1`}></i>
@@ -24,39 +25,8 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description, del
 };
 
 export const Services: React.FC = () => {
-    const services = [
-        {
-            icon: "bi-laptop",
-            title: "Website Development",
-            description: "Creating professional, responsive, and user-friendly websites to elevate your online presence."
-        },
-        {
-            icon: "bi-code-slash",
-            title: "Tailored Software Solutions",
-            description: "Custom software solutions designed to meet your unique business needs with precision."
-        },
-        {
-            icon: "bi-laptop",
-            title: "Website Development",
-            description: "Creating professional, responsive, and user-friendly websites to elevate your online presence."
-        },
-        {
-            icon: "bi-code-slash",
-            title: "Tailored Software Solutions",
-            description: "Custom software solutions designed to meet your unique business needs with precision."
-        },
-        {
-            icon: "bi-laptop",
-            title: "Website Development",
-            description: "Creating professional, responsive, and user-friendly websites to elevate your online presence."
-        },
-        {
-            icon: "bi-code-slash",
-            title: "Tailored Software Solutions",
-            description: "Custom software solutions designed to meet your unique business needs with precision."
-        },
-        // Add other services...
-    ];
+
+
 
     return (
         <section className="creative-services py-5" id="services">

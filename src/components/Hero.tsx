@@ -31,7 +31,7 @@ export const Hero: React.FC = () => {
                     <div className="logo-container" style={{textAlign: 'center', margin: '20px 0'}}>
                         <img
                             className="logo-img"
-                            src="https://res.cloudinary.com/dkznriytt/image/upload/v1721718424/g2-site/a7admjkajwxxs72k69m2.png"
+                            src="https://res.cloudinary.com/dkznriytt/image/upload/t_720/v1721718424/g2-site/a7admjkajwxxs72k69m2.png"
                             alt="Logo"
                         />
                     </div>

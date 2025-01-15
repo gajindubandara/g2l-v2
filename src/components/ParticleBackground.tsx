@@ -122,7 +122,7 @@ class Particle {
     }
 }
 
-const ParticleBackground: React.FC = () => {
+export const ParticleBackground: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const animationFrameRef = useRef<number>();
     const particlesRef = useRef<Particle[]>([]);
@@ -196,4 +196,4 @@ const ParticleBackground: React.FC = () => {
     );
 };
 
-export default ParticleBackground;
+

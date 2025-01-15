@@ -90,7 +90,13 @@ export const Navbar: React.FC = () => {
                             <a className="nav-link" href="#services" onClick={handleLinkClick}>Services</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#projects" onClick={handleLinkClick}>Projects</a>
+                            <a className="nav-link" href="#projects" onClick={handleLinkClick}>Websites</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#music" onClick={handleLinkClick}>Music</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#branding" onClick={handleLinkClick}>Branding</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#contact" onClick={handleLinkClick}>Contact Us</a>
