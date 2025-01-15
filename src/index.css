@@ -51,9 +51,6 @@ body{
     text-align: center;
 }
 
-
-/* Updated navbar styles */
-/* Base navbar styles */
 .navbar {
     transition: all 0.3s ease;
     padding: 20px 0 !important;
@@ -66,10 +63,28 @@ body{
     font-family: 'Aquire', sans-serif;
 }
 
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+}
+
+.brand-icon {
+    width: 140px;  /* Adjust size as needed */
+    height: 30px;  /* Adjust size as needed */
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+/* Optional: Add hover effect */
+.navbar-brand:hover .brand-icon {
+    transform: scale(1.1);
+}
+
 /* Mobile styles */
 @media (max-width: 991.98px) {
     .navbar {
-        background: rgba(44, 44, 44, 0.5) ;
+        background: rgba(44, 44, 44, 0.5);
     }
 
     .navbar-collapse {
@@ -77,7 +92,7 @@ body{
         top: 100%;
         left: 0;
         right: 0;
-        background: #121212;
+        background:rgba(44, 44, 44, 0.9);
         padding: 1rem;
         opacity: 0;
         transform: translateY(-10px);
@@ -99,6 +114,15 @@ body{
 
     .nav-item {
         padding: 0.5rem 1rem;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s ease;
+    }
+
+    .navbar-collapse.items-animated .nav-item {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: calc(var(--item-index) * 0.1s);
     }
 
     .nav-link {
@@ -118,10 +142,16 @@ body{
     }
 
     .navbar.scrolled {
-        background: rgba(44, 44, 44, 0.5) ;
+        background: rgba(44, 44, 44, 0.5);
         backdrop-filter: blur(10px);
         padding: 10px 0 !important;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item {
+        opacity: 1;
+        transform: none;
+        transition: none;
     }
 }
 
@@ -132,9 +162,7 @@ body{
 }
 
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
-}
-
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;}
 
 p {
     font-size: 1rem;
